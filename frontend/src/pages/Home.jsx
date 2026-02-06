@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react"
-
+import '../index.css'
 const Home = () => {
 
     const [workouts, setWorkouts] = useState([]);
@@ -7,15 +7,15 @@ const Home = () => {
     useEffect(()=>{
         const fetchWorkouts = async () => {
             try {
-                const allWorkouts = await fetch('/api/workouts')
-                const json = await allWorkouts.json();
+                const response = await fetch('/api/workouts')
+                const json = await response.json();
                 
-                console.log (allWorkouts);
+                console.log (response);
                 console.log (json);
-                if (allWorkouts.ok){
+                if (response.ok){
                     setWorkouts(json);
                 }
-                if (!allWorkouts.ok){
+                if (!response.ok){
                     console.error("Failed to fetch workouts:", json.error);
                 }
             } catch (error) {
@@ -26,18 +26,16 @@ const Home = () => {
     }, [])
     return (
         <div className="">
-            Fitness Partner
-
             <div>
                 {workouts && workouts.map((workout, index) => (
-            <div key={workout._id} className="">
-                <h3>{workout.title}</h3>  
-                <p>{workout.load} kg</p>
-                <p>{workout.reps} reps</p>
-                <p>{workout.createdAt}</p>
-            </div>
-            ))
-        }
+                    <div key={workout._id} className="">
+                        <h3>{workout.title}</h3>  
+                        <p>{workout.load} kg</p>
+                        <p>{workout.reps} reps</p>
+                        <p>{workout.createdAt}</p>
+                    </div>
+                    ) )
+                }
             </div>
         </div>
 

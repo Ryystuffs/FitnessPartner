@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const workoutSchema = new Schema({
     title:{
         required: true,
-        type: String
+        type: String,
+        unique: true,
     },
-    load:{
+    load:{ 
         required: true,
         type: Number
     },
