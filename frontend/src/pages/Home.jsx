@@ -27,9 +27,9 @@ const Home = () => {
     }, [])
     return (
         <div className="h-screen p-5">
-            <div className="grid grid-cols-1 gap-10">
+            <div className="grid grid-cols-1 gap-10 sm:grid-cols-4 md:auto-cols-fr">
                 {workouts && workouts.map((workout, index) => (
-                    <WorkoutCard workout={workout} key={index}/>
+                    <WorkoutCard workout={workout} key={workout._id}/>
                     ))
                 }
             </div>
