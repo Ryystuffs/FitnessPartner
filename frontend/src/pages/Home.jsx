@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import '../index.css'
 import WorkoutCard from "../components/WorkoutCard";
+import WorkoutForm from "../components/WorkoutForm";
 const Home = () => {
 
     const [workouts, setWorkouts] = useState([]);
@@ -26,12 +27,15 @@ const Home = () => {
         fetchWorkouts();
     }, [])
     return (
-        <div className="h-screen p-5">
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-4 md:auto-cols-fr">
+        <div className="h-screen p-5 grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div className="grid grid-cols-1 col-span-2 gap-10 sm:grid-cols-2 md:grid-cols-3 md:auto-cols-fr max-h-60">
                 {workouts && workouts.map((workout, index) => (
                     <WorkoutCard workout={workout} key={workout._id}/>
                     ))
                 }
+            </div>
+            <div>
+                <WorkoutForm/>
             </div>
         </div>
 
