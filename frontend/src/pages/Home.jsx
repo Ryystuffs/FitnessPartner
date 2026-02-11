@@ -2,9 +2,10 @@ import { useState, useEffect } from "react"
 import '../index.css'
 import WorkoutCard from "../components/WorkoutCard";
 import WorkoutForm from "../components/WorkoutForm";
+import { useWorkoutContext } from "../hooks/useWorkoutContext";
 const Home = () => {
 
-    const [workouts, setWorkouts] = useState([]);
+    const {workouts, dispatch} = useWorkoutContext();
 
     useEffect(()=>{
         const fetchWorkouts = async () => {
@@ -15,7 +16,7 @@ const Home = () => {
                 console.log (response);
                 console.log (json);
                 if (response.ok){
-                    setWorkouts(json);
+                    dispatch({type: "SET_WORKOUTS" , payload: json })
                 }
                 if (!response.ok){
                     console.error("Failed to fetch workouts:", json.error);
@@ -34,7 +35,7 @@ const Home = () => {
                     ))
                 }
             </div>
-            <div>
+            <div className="hidden md:block">
                 <WorkoutForm/>
             </div>
         </div>
