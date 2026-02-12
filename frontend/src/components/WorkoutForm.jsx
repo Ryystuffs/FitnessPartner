@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import Loading from '../ui/Loading';
+import ConfirmationModal from "../ui/ConfirmationModal";
 
 const WorkoutForm = () => {
+
+  const [confirmationModal, setConfirmationModal] = useState(false);
   const initialForm = {
     title: "",
     load: "",
@@ -24,13 +28,16 @@ const WorkoutForm = () => {
     setForm(initialForm);
   };
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    if (e){
+      e.preventDefault();
+    }
     const workout = {
       title: form.title,
       load: Number(form.load),
       reps: Number(form.reps),
     };
     try {
+      setLoading(true);
       const response = await fetch("/api/workouts/", {
         method: "POST",
         body: JSON.stringify(workout),
@@ -53,12 +60,15 @@ const WorkoutForm = () => {
     } catch (error) {
       setError(err.message || "Something went wrong");
     } finally {
-
+      setLoading(false);
     }
   };
   return (
+    <>
+    
+    
     <div className="shadow-2xl/45 border bg-gray-800 border-gray-700 rounded-2xl py-5 px-6">
-        <form onSubmit={handleSubmit}>
+        <form>
             <div className="flex flex-col">
                 <div className="text-2xl my-3 flex justify-center text-blue-400">Add a new Workout</div>
                 <div className="flex flex-col gap-y-4">
@@ -87,7 +97,7 @@ const WorkoutForm = () => {
                     className="border-b my-1 p-2"
                     />
                     <div>
-                        <button type="submit" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600">Add new Workout</button>
+                        <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600" onClick={() => setConfirmationModal(true)}>Add new Workout</button>
                     </div>
                     <div>
                         {error && <div className="text-red-600">{error}</div>}
@@ -97,6 +107,22 @@ const WorkoutForm = () => {
             
         </form>
     </div>
+
+    {confirmationModal && (
+        <ConfirmationModal
+          message={"Are you sure to add workout"}
+          onConfirm={async ()=>{
+            await handleSubmit();
+            setConfirmationModal(false);
+          }}
+          onCancel={()=> setConfirmationModal(false)}
+        />
+      )}
+    
+    {loading && (
+      <Loading/>
+    )}
+    </>
   );
 };
 

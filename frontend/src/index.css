@@ -4,4 +4,11 @@
   body {
     @apply bg-gray-800 text-white font-sans;
   }
+  
+}
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+.spinner {
+  animation: spin 1.5s linear infinite;
 }
