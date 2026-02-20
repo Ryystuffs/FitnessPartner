@@ -10,7 +10,7 @@ const WorkoutCard = ({ workout, index }) => {
   const [editMode, setEditMode] = useState(false);
   const handleDelete = async () => {
     try{
-    const response = await fetch(`${process.env.REACT_APP_API_URL}/api/workouts/${workout._id}`, {
+    const response = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts/${workout._id}`, {
       method: "DELETE"
     });
     const json = await response.json();
