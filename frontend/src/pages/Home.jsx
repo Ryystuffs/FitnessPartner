@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import '../index.css'
-import WorkoutCard from "../components/workoutCard";
+import WorkoutCard from "../components/WorkoutCard";
 import WorkoutForm from "../components/WorkoutForm";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
 const Home = () => {
