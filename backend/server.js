@@ -1,6 +1,7 @@
 
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const workoutsRoutes = require('./routes/workouts')
 //app initialization
 const app = express();
@@ -8,6 +9,10 @@ const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
 
 //middleware
+app.use(cors({
+    origin: 'https://fitness-partner-five.vercel.app'
+}
+));
 app.use(express.json());
 app.use((req, res, next)=>{
     console.log(req.path, req.method)
