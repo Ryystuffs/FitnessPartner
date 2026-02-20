@@ -44,7 +44,7 @@ const WorkoutForm = ({workout, onClose}) => {
     if (workout){
       try{
         setLoading(true);
-        const response = await fetch('/api/workouts/' + workout._id, {
+        const response = await fetch(`${process.env.REACT_APP_API_URL}/api/workouts/${workout._id}`, {
           method: "PATCH",
           body: JSON.stringify(form),
           headers: {
@@ -75,7 +75,7 @@ const WorkoutForm = ({workout, onClose}) => {
     };
     try {
       setLoading(true);
-      const response = await fetch("/api/workouts/", {
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/api/workouts`, {
         method: "POST",
         body: JSON.stringify(workout),
         headers: {
