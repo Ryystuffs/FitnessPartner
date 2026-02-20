@@ -5,7 +5,7 @@ const workoutsRoutes = require('./routes/workouts')
 //app initialization
 const app = express();
 const mongoose = require('mongoose');
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 
 //middleware
 app.use(express.json());
