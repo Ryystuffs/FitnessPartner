@@ -6,11 +6,10 @@ import { useWorkoutContext } from "../hooks/useWorkoutContext";
 const Home = () => {
 
     const {workouts, dispatch} = useWorkoutContext();
-
     useEffect(()=>{
         const fetchWorkouts = async () => {
             try {
-                const response = await fetch('/api/workouts')
+                const response = await fetch('/api/workouts');
                 const json = await response.json();
                 
                 console.log (response);
@@ -29,13 +28,13 @@ const Home = () => {
     }, [])
     return (
         <div className="h-screen p-5 grid grid-cols-1 md:grid-cols-3 gap-10">
-            <div className="grid grid-cols-1 col-span-2 gap-10 sm:grid-cols-2 md:grid-cols-3 md:auto-cols-fr max-h-60">
+            <div className="grid grid-cols-1 col-span-2 md:col-span-3 lg:col-span-2 gap-10 sm:grid-cols-2 md:grid-cols-3 md:auto-cols-fr max-h-60">
                 {workouts && workouts.map((workout, index) => (
                     <WorkoutCard workout={workout} key={workout._id}/>
                     ))
                 }
             </div>
-            <div className="hidden md:block">
+            <div className="hidden lg:block">
                 <WorkoutForm/>
             </div>
         </div>

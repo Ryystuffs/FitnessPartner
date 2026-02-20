@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import ConfirmationModal from "../ui/ConfirmationModal";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import WorkoutForm from "./WorkoutForm";
 
 
 const WorkoutCard = ({ workout, index }) => {
   
   const {dispatch} = useWorkoutContext();
+  const [editMode, setEditMode] = useState(false);
   const handleDelete = async () => {
     try{
     const response = await fetch('/api/workouts/'+ workout._id, {
@@ -35,10 +37,11 @@ const WorkoutCard = ({ workout, index }) => {
           <p>{workout.createdAt}</p>
           <div className="flex gap-2 justify-end">
             <button type="button" className="w-15 h-10 bg-red-400 rounded-xl p-2 hover:bg-red-500 " onClick={()=> setConfirmationModal(true)}>Delete</button>
-            <button type="button" className="w-15 h-10 bg-green-400 rounded-xl p-2 hover:bg-green-500 ">Edit</button>
+            <button type="button" className="w-15 h-10 bg-green-400 rounded-xl p-2 hover:bg-green-500 " onClick={()=> {
+              setEditMode(true);
+            }}>Edit</button>
           </div>
         </div>
-        
       </div>
       {confirmationModal && (
         <ConfirmationModal
@@ -49,6 +52,11 @@ const WorkoutCard = ({ workout, index }) => {
           }}
           onCancel={()=> setConfirmationModal(false)}
         />
+      )}
+      {editMode && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-20">
+          <WorkoutForm workout={workout} onClose={()=> setEditMode(false)}/>
+        </div>
       )}
     </>
   );

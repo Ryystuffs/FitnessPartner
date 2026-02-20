@@ -6,6 +6,7 @@ import './index.css'
 {/* pages & components */}
 import Home from './pages/Home'
 import Navbar from './components/navbar'
+import AddWorkout from './pages/AddWorkout'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -21,6 +22,8 @@ function App() {
             element={
               <Home />
             }>
+            </Route>
+            <Route path='/AddWorkout' element={<AddWorkout/>}>
             </Route>
           </Routes>
         </BrowserRouter>
