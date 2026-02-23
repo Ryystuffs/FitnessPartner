@@ -10,6 +10,7 @@ const Home = () => {
         const fetchWorkouts = async () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts`);
+                console.log("API URL:", import.meta.env.VITE_API_URL);
                 const json = await response.json();
                 
                 console.log (response);
