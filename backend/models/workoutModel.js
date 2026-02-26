@@ -5,7 +5,6 @@ const workoutSchema = new Schema({
     title:{
         required: true,
         type: String,
-        unique: true,
     },
     load:{ 
         required: true,
@@ -14,6 +13,13 @@ const workoutSchema = new Schema({
     reps:{
         required: true,
         type: Number
+
+    },
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+        required: false
+     
 
     }
 }, { timestamps: true});

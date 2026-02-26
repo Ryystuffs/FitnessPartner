@@ -106,7 +106,7 @@ const WorkoutForm = ({workout, onClose}) => {
     <>
     
     
-    <div className={`shadow-2xl/45 border bg-gray-800 border-gray-700 rounded-2xl py-5 px-6 ${workout ? "w-96" : "w-full"}`}>
+    <div className={`shadow-2xl/45 border bg-gray-800 border-gray-700 rounded-2xl py-5 px-6 ${workout ? "w-96 " : "w-full"}`}>
         <form>
             <div className="flex flex-col">
                 <div className="text-2xl my-3 flex justify-between items-center gap-2 text-blue-400">{workout ? "Edit Workout" : "Add a new Workout"} {workout && <img src={CloseIcon} alt="Close Icon" className="w-6 h-6 ml-2" onClick={onClose}/>}</div>

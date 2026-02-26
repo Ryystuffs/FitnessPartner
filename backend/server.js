@@ -7,12 +7,26 @@ const workoutsRoutes = require('./routes/workouts')
 const app = express();
 const mongoose = require('mongoose');
 const PORT = process.env.PORT || 5000;
+const categoryRoutes = require('./routes/category');
 
 //middleware
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://fitness-partner-five.vercel.app'
+];
+
 app.use(cors({
-    origin: 'https://fitness-partner-five.vercel.app'
-}
-));
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // allow Postman, etc.
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(null, false);
+    }
+  },
+  methods: ['GET', 'POST', 'DELETE', 'PATCH'],
+  credentials: true
+}));
 app.use(express.json());
 app.use((req, res, next)=>{
     console.log(req.path, req.method)
@@ -20,6 +34,7 @@ app.use((req, res, next)=>{
 })
 //routes
 app.use('/api/workouts', workoutsRoutes);
+app.use('/api/categories', categoryRoutes);
 
 //connect to db
 mongoose.connect(process.env.MONGO_URI)

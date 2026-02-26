@@ -1,10 +1,18 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import '../index.css';
 import MenuIcon from '../assets/menu.png';
 import CloseIcon  from '../assets/reject.png';
 import { Link } from 'react-router-dom'
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+
+    useEffect(()=>{
+        if (isOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto';
+        }
+    })
     return (
         <div className="bg-black">
             <div className='flex justify-between py-7 px-5'>    
@@ -20,7 +28,7 @@ const Navbar = () => {
             </div>
 
             {isOpen && (
-                <div className='fixed inset-0 top-[90px] bg-black/60 backdrop-blur-md'>
+                <div className='fixed inset-0 top-[90px] bg-black/60 backdrop-blur-md '>
                     <Link to='AddWorkout'onClick={()=> setIsOpen(prev => !prev)}>AddWorkout</Link>
                 </div>
         )}

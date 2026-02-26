@@ -3,6 +3,7 @@ import '../index.css'
 import WorkoutCard from "../components/WorkoutCard";
 import WorkoutForm from "../components/WorkoutForm";
 import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import CategoryForm from "../components/CategoryForm";
 const Home = () => {
 
     const {workouts, dispatch} = useWorkoutContext();
@@ -35,9 +36,11 @@ const Home = () => {
                     ))
                 }
             </div>
-            <div className="hidden lg:block">
+            <div className="hidden lg:block space-y-10">
                 <WorkoutForm/>
+                <CategoryForm/>
             </div>
+            
         </div>
 
         
