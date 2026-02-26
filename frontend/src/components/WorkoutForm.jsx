@@ -108,35 +108,38 @@ const WorkoutForm = ({workout, onClose}) => {
     
     <div className={`shadow-2xl/45 border bg-gray-800 border-gray-700 rounded-2xl py-5 px-6 ${workout ? "w-96 " : "w-full"}`}>
         <form>
-            <div className="flex flex-col">
-                <div className="text-2xl my-3 flex justify-between items-center gap-2 text-blue-400">{workout ? "Edit Workout" : "Add a new Workout"} {workout && <img src={CloseIcon} alt="Close Icon" className="w-6 h-6 ml-2" onClick={onClose}/>}</div>
-                <div className="flex flex-col gap-y-4">
+            <div className="flex flex-col px-5 py-5 gap-y-4">
+                <div className="text-2xl my-3 flex justify-between items-center gap-2 text-blue-400">{workout ? "Edit Workout" : "New workout"} {workout && <img src={CloseIcon} alt="Close Icon" className="w-6 h-6 ml-2" onClick={onClose}/>}</div>
+                <div className="flex flex-col gap-y-1">
+                  <label htmlFor="title" className="text-sm">Name:</label>
                     <input
                     name="title"
                     type="text"
-                    placeholder="Title"
+                    placeholder="Create a workout"
                     onChange={handleChange}
                     value={form.title}
-                    className="border-b my-1 p-2 "
+                    className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
+                  <label htmlFor="load" className="text-sm">Load (kg):</label>
                     <input
                     name="load"
                     type="number"
                     placeholder="in Kg"
                     onChange={handleChange}
                     value={form.load}
-                    className="border-b my-1 p-2"
+                    className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
+                  <label htmlFor="reps" className="text-sm">Reps:</label>
                     <input
                     name="reps"
                     type="number"
                     placeholder="reps"
                     onChange={handleChange}
                     value={form.reps}
-                    className="border-b my-1 p-2"
+                    className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                     <div>
-                        <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600" onClick={() => setConfirmationModal(true)}>{workout ? "Update Workout" : "Add new Workout"}</button>
+                        <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600 hover:scale-105 transition-transform duration-200" onClick={() => setConfirmationModal(true)}>{workout ? "Update Workout" : "Add Workout"}</button>
                     </div>
                     <div>
                         {error && <div className="text-red-600">{error}</div>}

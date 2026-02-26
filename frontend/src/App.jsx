@@ -7,10 +7,9 @@ import './index.css'
 import Home from './pages/Home'
 import Navbar from './components/navbar'
 import AddWorkout from './pages/AddWorkout'
-
+import AddCategory from './pages/AddCategory'
+import Categories from './pages/Categories'
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
     <>
       <div className="">
@@ -24,6 +23,10 @@ function App() {
             }>
             </Route>
             <Route path='/AddWorkout' element={<AddWorkout/>}>
+            </Route>
+            <Route path='/AddCategory' element={<AddCategory/>}>
+            </Route>
+            <Route path='/Categories' element={<Categories/>}>
             </Route>
           </Routes>
         </BrowserRouter>
