@@ -2,7 +2,7 @@ import { useState, useEffect } from "react"
 import '../index.css'
 import WorkoutCard from "../components/WorkoutCard";
 import WorkoutForm from "../components/WorkoutForm";
-import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import  useWorkoutContext from "../hooks/useWorkoutContext";
 import CategoryForm from "../components/CategoryForm";
 const Home = () => {
 

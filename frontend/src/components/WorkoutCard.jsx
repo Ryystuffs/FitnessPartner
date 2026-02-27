@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import ConfirmationModal from "../ui/ConfirmationModal";
-import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import  useWorkoutContext  from "../hooks/useWorkoutContext";
 import WorkoutForm from "./WorkoutForm";
 
 
 const WorkoutCard = ({ workout, index }) => {
   
-  const {dispatch} = useWorkoutContext();
+  const { dispatch } = useWorkoutContext();
   const [editMode, setEditMode] = useState(false);
   const handleDelete = async () => {
     try{

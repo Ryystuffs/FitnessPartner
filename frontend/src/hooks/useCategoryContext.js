@@ -13,4 +13,4 @@ const useCategoryContext = () => {
 }
 
 
-export default useCategoryContext
+export default useCategoryContext;

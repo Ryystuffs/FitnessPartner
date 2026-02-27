@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useWorkoutContext } from "../hooks/useWorkoutContext";
+import useWorkoutContext from "../hooks/useWorkoutContext";
 import Loading from '../ui/Loading';
 import ConfirmationModal from "../ui/ConfirmationModal";
 import CloseIcon  from '../assets/reject.png';

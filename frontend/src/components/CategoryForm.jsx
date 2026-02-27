@@ -1,10 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from "react";
-import { useCategoryContext } from '../context/CategoryContext';
+import  useCategoryContext from '../hooks/useCategoryContext';
 import ConfirmationModal from '../ui/ConfirmationModal';
 const CategoryForm = () => {
 
   const [confirmationModal, setConfirmationModal] = useState(false);
+
+  const { dispatch } = useCategoryContext();
 
   const initialState = {
     name: "",
@@ -13,14 +15,44 @@ const CategoryForm = () => {
   const resetForm = () => {
     setForm(initialState);
   };
-  const handleChange = (e) => {
+  const handleChange =  (e) => {
     setForm((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }))
   }
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    if(e){
+      e.preventDefault();
+    }
+    const missingFields = [];
+    
+    if (form.name === null){
+      missingFields.push("Fill up fields")
+    }
+
+    try {
+      const categories = {
+        name: form.name
+      }
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/categories/`, 
+        { method: "POST",
+          body: JSON.stringify(categories),
+          headers: {
+            "Content-Type" : "application/json"
+          }
+        });
+      const json = await response.json();
+      if (!response.ok){
+
+      }
+      if (response.ok){
+        resetForm();
+        dispatch({type: "CREATE_CATEGORY", payload: json})
+      }
+    } catch (error) {
+      
+    }
   }
   return (
     <>
@@ -41,7 +73,7 @@ const CategoryForm = () => {
               className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
             />
             <div>
-              <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600 hover:scale-105 transition-transform duration-200" onClick={()=> {confirmationModal(true)}}>Add Category</button>
+              <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600 hover:scale-105 transition-transform duration-200" onClick={()=> {setConfirmationModal(true)}}>Add Category</button>
             </div>
           </div>
 
