@@ -3,6 +3,8 @@ import useWorkoutContext from "../hooks/useWorkoutContext";
 import Loading from '../ui/Loading';
 import ConfirmationModal from "../ui/ConfirmationModal";
 import CloseIcon  from '../assets/reject.png';
+import { API_URL } from "../config";
+
 
 const WorkoutForm = ({workout, onClose}) => {
 
@@ -11,12 +13,14 @@ const WorkoutForm = ({workout, onClose}) => {
     title: "",
     load: "",
     reps: "",
+    category: "",
   };
   const {dispatch} = useWorkoutContext();
 
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -24,12 +28,40 @@ const WorkoutForm = ({workout, onClose}) => {
       [e.target.name]: e.target.value,
     }));
   };
+  const fetchCategories = async () => {
+    try {
+      setLoading(true);
+      const response = await fetch(`${API_URL}/api/categories/`);
+      const json = await response.json();
+      console.log(json);
+      
+
+      if (!response.ok){
+        setError(json.error);
+      }
+
+      if (response.ok){
+        setError(null);
+        setCategories(json);
+      }
+      
+    } catch (error) {
+      setError(error.message);
+    }finally{
+      setLoading(false);
+    }
+  } 
+
+  useEffect(()=>{
+    fetchCategories();
+  }, [])
   useEffect(() => {
     if (workout) {
       setForm({
         title: workout.title,
         load: workout.load,
         reps: workout.reps,
+        category: workout.category
       });
     }
   }, [workout]);
@@ -72,6 +104,7 @@ const WorkoutForm = ({workout, onClose}) => {
       title: form.title,
       load: Number(form.load),
       reps: Number(form.reps),
+      category: form.category
     };
     try {
       setLoading(true);
@@ -138,6 +171,14 @@ const WorkoutForm = ({workout, onClose}) => {
                     value={form.reps}
                     className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
+                  <select name="category" id="category" value={form.category} onChange={handleChange}>
+                    <option disabled >Select a category</option>
+                    {
+                      categories.map((category)=>(
+                       <option key={category._id} value={category._id}>{category.name}</option>
+                      ))
+                    } 
+                  </select>
                     <div>
                         <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600 hover:scale-105 transition-transform duration-200" onClick={() => setConfirmationModal(true)}>{workout ? "Update Workout" : "Add Workout"}</button>
                     </div>
