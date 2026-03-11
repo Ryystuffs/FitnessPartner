@@ -155,7 +155,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
                        <option key={category._id} value={category._id}>{category.name}</option>
                       ))
                     } 
-                  </selectc>
+                  </select>
                     <div>
                         <button type="button" className="w-full bg-blue-400 rounded-2xl p-3 hover:bg-blue-600 hover:scale-105 transition-transform duration-200" onClick={() => setConfirmationModal(true)}>{workout ? "Update Workout" : "Add Workout"}</button>
                     </div>
