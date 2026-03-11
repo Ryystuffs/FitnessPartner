@@ -34,6 +34,7 @@ const WorkoutCard = ({ workout, index }) => {
           <hr className="my-2" />
           <p>{workout.load} kg</p>
           <p>{workout.reps} reps</p>
+          <p>{workout.category?.name || "no category"}</p>
           <p>{workout.createdAt}</p>
           <div className="flex gap-2 justify-end">
             <button type="button" className="w-15 h-10 bg-red-400 rounded-xl p-2 hover:bg-red-500 " onClick={()=> setConfirmationModal(true)}>Delete</button>

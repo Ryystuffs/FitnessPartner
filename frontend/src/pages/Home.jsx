@@ -4,9 +4,42 @@ import WorkoutCard from "../components/WorkoutCard";
 import WorkoutForm from "../components/WorkoutForm";
 import  useWorkoutContext from "../hooks/useWorkoutContext";
 import CategoryForm from "../components/CategoryForm";
-const Home = () => {
+import Loading from '../ui/Loading';
+import { API_URL } from "../config";
 
+const Home = () => {
+    const [error, setError] = useState(null);
+    const [categories, setCategories] = useState([]);
     const {workouts, dispatch} = useWorkoutContext();
+    const [loading, setLoading] = useState(false);
+
+    const fetchCategories = async () => {
+        try {
+        setLoading(true);
+        const response = await fetch(`${API_URL}/api/categories/`);
+        const json = await response.json();
+        console.log(json);
+        
+
+        if (!response.ok){
+            setError(json.error);
+        }
+
+        if (response.ok){
+            setError(null);
+            setCategories(json);
+        }
+        
+        } catch (error) {
+        setError(error.message);
+        }finally{
+        setLoading(false);
+        }
+    } 
+
+    useEffect(()=>{
+        fetchCategories();
+    }, [])
     useEffect(()=>{
         const fetchWorkouts = async () => {
             try {
@@ -37,7 +70,7 @@ const Home = () => {
                 }
             </div>
             <div className="hidden lg:block space-y-10">
-                <WorkoutForm/>
+                <WorkoutForm categories={categories}/>
                 <CategoryForm/>
             </div>
             

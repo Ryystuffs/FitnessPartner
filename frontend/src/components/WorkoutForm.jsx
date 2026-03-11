@@ -3,10 +3,10 @@ import useWorkoutContext from "../hooks/useWorkoutContext";
 import Loading from '../ui/Loading';
 import ConfirmationModal from "../ui/ConfirmationModal";
 import CloseIcon  from '../assets/reject.png';
-import { API_URL } from "../config";
 
 
-const WorkoutForm = ({workout, onClose}) => {
+
+const WorkoutForm = ({workout, onClose, categories=[] }) => {
 
   const [confirmationModal, setConfirmationModal] = useState(false);
   const initialForm = {
@@ -20,7 +20,7 @@ const WorkoutForm = ({workout, onClose}) => {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
+  
 
   const handleChange = (e) => {
     setForm((prev) => ({
@@ -28,33 +28,7 @@ const WorkoutForm = ({workout, onClose}) => {
       [e.target.name]: e.target.value,
     }));
   };
-  const fetchCategories = async () => {
-    try {
-      setLoading(true);
-      const response = await fetch(`${API_URL}/api/categories/`);
-      const json = await response.json();
-      console.log(json);
-      
-
-      if (!response.ok){
-        setError(json.error);
-      }
-
-      if (response.ok){
-        setError(null);
-        setCategories(json);
-      }
-      
-    } catch (error) {
-      setError(error.message);
-    }finally{
-      setLoading(false);
-    }
-  } 
-
-  useEffect(()=>{
-    fetchCategories();
-  }, [])
+  
   useEffect(() => {
     if (workout) {
       setForm({
@@ -171,7 +145,7 @@ const WorkoutForm = ({workout, onClose}) => {
                     value={form.reps}
                     className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
-                  <select name="category" id="category" value={form.category} onChange={handleChange}>
+                  <select name="category" id="category" value={form.category} onChange={handleChange} className="bg-black">
                     <option disabled >Select a category</option>
                     {
                       categories.map((category)=>(
