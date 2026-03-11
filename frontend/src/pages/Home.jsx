@@ -6,12 +6,16 @@ import  useWorkoutContext from "../hooks/useWorkoutContext";
 import CategoryForm from "../components/CategoryForm";
 import Loading from '../ui/Loading';
 import { API_URL } from "../config";
+import useCategoryContext from "../hooks/useCategoryContext";
 
 const Home = () => {
     const [error, setError] = useState(null);
-    const [categories, setCategories] = useState([]);
-    const {workouts, dispatch} = useWorkoutContext();
+    
+    
     const [loading, setLoading] = useState(false);
+
+    const { categories, dispatch: categoryDispatch} = useCategoryContext();
+    const {workouts, dispatch} = useWorkoutContext();
 
     const fetchCategories = async () => {
         try {
@@ -27,7 +31,7 @@ const Home = () => {
 
         if (response.ok){
             setError(null);
-            setCategories(json);
+            categoryDispatch({type: 'SET_CATEGORIES', payload: json});
         }
         
         } catch (error) {
@@ -40,8 +44,7 @@ const Home = () => {
     useEffect(()=>{
         fetchCategories();
     }, [])
-    useEffect(()=>{
-        const fetchWorkouts = async () => {
+    const fetchWorkouts = async () => {
             try {
                 const response = await fetch(`${import.meta.env.VITE_API_URL}/api/workouts`);
                 console.log("API URL:", import.meta.env.VITE_API_URL);
@@ -59,10 +62,12 @@ const Home = () => {
                 console.error("Error fetching workouts:", error);
             }
         }
+    useEffect(()=>{
+        
         fetchWorkouts();
     }, [])
     return (
-        <div className="h-screen p-5 grid grid-cols-1 md:grid-cols-3 gap-10">
+        <>        <div className="h-screen p-5 grid grid-cols-1 md:grid-cols-3 gap-10">
             <div className="grid grid-cols-1 col-span-2 md:col-span-3 lg:col-span-2 gap-10 sm:grid-cols-2 md:grid-cols-3 md:auto-cols-fr max-h-60">
                 {workouts && workouts.map((workout, index) => (
                     <WorkoutCard workout={workout} key={workout._id}/>
@@ -76,7 +81,9 @@ const Home = () => {
             
         </div>
 
-        
+        {loading && (<Loading/>)}
+        </>
+
     )
 }
 

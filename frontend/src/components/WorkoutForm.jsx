@@ -120,6 +120,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
                 <div className="flex flex-col gap-y-1">
                   <label htmlFor="title" className="text-sm">Name:</label>
                     <input
+                    id="title"
                     name="title"
                     type="text"
                     placeholder="Create a workout"
@@ -129,6 +130,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
                     />
                   <label htmlFor="load" className="text-sm">Load (kg):</label>
                     <input
+                    id="load"
                     name="load"
                     type="number"
                     placeholder="in Kg"
@@ -138,6 +140,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
                     />
                   <label htmlFor="reps" className="text-sm">Reps:</label>
                     <input
+                    id="reps"
                     name="reps"
                     type="number"
                     placeholder="reps"
@@ -146,7 +149,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
                     className="border border-gray-500 p-3 rounded-xl mb-5 focus:outline-none focus:ring-2 focus:ring-blue-400"
                     />
                   <select name="category" id="category" value={form.category} onChange={handleChange} className="bg-black">
-                    <option disabled >Select a category</option>
+                    <option disabled value=""  >Select a category</option>
                     {
                       categories.map((category)=>(
                        <option key={category._id} value={category._id}>{category.name}</option>
