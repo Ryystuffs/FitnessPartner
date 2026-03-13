@@ -20,7 +20,7 @@ const WorkoutForm = ({workout, onClose, categories=[] }) => {
   const [form, setForm] = useState(initialForm);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
-  
+    
 
   const handleChange = (e) => {
     setForm((prev) => ({

@@ -9,6 +9,7 @@ import Navbar from './components/navbar'
 import AddWorkout from './pages/AddWorkout'
 import AddCategory from './pages/AddCategory'
 import Categories from './pages/Categories'
+import Auth from './pages/Auth';
 function App() {
   return (
     <>
@@ -28,6 +29,7 @@ function App() {
             </Route>
             <Route path='/Categories' element={<Categories/>}>
             </Route>
+            <Route path='/Login' element={<Auth/>}></Route>
           </Routes>
         </BrowserRouter>
       </div>
