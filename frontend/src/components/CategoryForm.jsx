@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import  useCategoryContext from '../hooks/useCategoryContext';
 import ConfirmationModal from '../ui/ConfirmationModal';
 const CategoryForm = () => {

@@ -8,8 +8,8 @@ const Auth = () => {
     <div>
         <div>Welcome</div>
         <div>
-            <div role='button' onClick={(e)=> setForm('login')} className={`${form === 'login' ? 'bg-red-600' : 'none' }`}>Login</div>
-            <div role='button' onClick={(e)=> setForm('signup')} className={`${form === 'signup' ? 'bg-red-600' : 'none' }`}>Signup</div>
+            <div role='button' onClick={()=> setForm('login')} className={`${form === 'login' ? 'bg-red-600' : 'none' }`}>Login</div>
+            <div role='button' onClick={()=> setForm('signup')} className={`${form === 'signup' ? 'bg-red-600' : 'none' }`}>Signup</div>
         </div>
 
         <div>
