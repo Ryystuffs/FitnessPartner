@@ -1,7 +1,9 @@
 import React from "react";
 import { useState } from "react";
 import { API_URL } from "../config";
+import useAuthContext from "../hooks/useAuthContext";
 const SignupForm = () => {
+  const { dispatch } = useAuthContext();
   const initialState = {
     username: "",
     email: "",
@@ -20,41 +22,62 @@ const SignupForm = () => {
     }));
   };
   const handleSubmit = async (e) => {
-      if (e) {
-        e.preventDefault();
+    if (e) {
+      e.preventDefault();
+    }
+    try {
+      if (form.password !== form.confirmPassword) {
+        console.error("password not the same");
+        return;
       }
-      try {
-        if (form.password !== form.confirmPassword){
-          console.error("password not the same")
-          return;
-        }
-        setIsSubmitting(true);
-        const response = await fetch(`${API_URL}/signup`, {
-          method: "POST",
-          body: JSON.stringify(form),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
-        const json = await response.json();
-        if (response.status === 200) {
-          console.log(json.message);
-        } else {
-          console.error(json.error);
-        }
-        resetForm();
-      } catch (error) {
-        console.log(error.message);
-      } finally {
-        setIsSubmitting(false);
+      setIsSubmitting(true);
+      const response = await fetch(`${API_URL}/signup`, {
+        method: "POST",
+        body: JSON.stringify(form),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const json = await response.json();
+      const userData = { token: json.token, user: json.result };
+      if (response.ok) {
+        dispatch({ type: "LOGIN", payload: userData });
+        localStorage.setItem("user", JSON.stringify(userData));
+        console.log(json.message);
+      } else {
+        console.error(json.error);
       }
-    };
+      resetForm();
+    } catch (error) {
+      console.log(error.message);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div>
       <form>
-        <input type="name" placeholder="username" name="username" onChange={handleChange} value={form.username}/>
-        <input type="email" placeholder="email" name="email" onChange={handleChange} value={form.email} />
-        <input type="password" placeholder="password" name="password" onChange={handleChange} value={form.password} />
+        <input
+          type="name"
+          placeholder="username"
+          name="username"
+          onChange={handleChange}
+          value={form.username}
+        />
+        <input
+          type="email"
+          placeholder="email"
+          name="email"
+          onChange={handleChange}
+          value={form.email}
+        />
+        <input
+          type="password"
+          placeholder="password"
+          name="password"
+          onChange={handleChange}
+          value={form.password}
+        />
         <input
           type="password"
           placeholder="confirm password"
@@ -62,7 +85,10 @@ const SignupForm = () => {
           onChange={handleChange}
           value={form.confirmPassword}
         />
-        <button onClick={handleSubmit} disabled={isSubmitting}> {isSubmitting ? "Signing in" : "Sign up"}</button>
+        <button onClick={handleSubmit} disabled={isSubmitting}>
+          {" "}
+          {isSubmitting ? "Signing in" : "Sign up"}
+        </button>
       </form>
     </div>
   );

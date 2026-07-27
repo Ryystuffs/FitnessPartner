@@ -2,8 +2,8 @@ import React from 'react'
 import LoginForm from '../components/LoginForm';
 import SignupForm from '../components/SignupForm';
 import { useState } from 'react';
-const Auth = () => {
-    const [form, setForm] = useState('login');
+const Auth = ({ para }) => {
+    const [form, setForm] = useState(para || 'login');
   return (
     <div>
         <div>Welcome</div>
